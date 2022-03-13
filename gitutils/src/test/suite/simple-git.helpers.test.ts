@@ -4,15 +4,17 @@ import { createLocalBranch } from '../../helpers/simple-git.helpers';
 
 suite('Simple git helpers', () => {
   suite('createLocalBranch()', () => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
     const sinon = require('sinon');
     const simpleGit = {
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       checkout: () => {}
     } as SimpleGit;
 
     test('checks out branch with correct parameters', function () {
       const baseBranch = 'origin/base';
       const newBranch = 'feature/drgn-123-new';
-      var checkoutSpy = sinon.spy(simpleGit, 'checkout');
+      const checkoutSpy = sinon.spy(simpleGit, 'checkout');
 
       createLocalBranch(baseBranch, newBranch, simpleGit);
 
