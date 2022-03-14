@@ -1,11 +1,10 @@
 import * as assert from 'assert';
+import * as sinon from 'sinon';
 import { SimpleGit } from 'simple-git';
 import { createLocalBranch } from '../../helpers/simple-git.helpers';
 
 suite('Simple git helpers', () => {
   suite('createLocalBranch()', () => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const sinon = require('sinon');
     const simpleGit = {
       // eslint-disable-next-line @typescript-eslint/no-empty-function
       checkout: () => {}
