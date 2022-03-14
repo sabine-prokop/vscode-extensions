@@ -1,7 +1,39 @@
 import * as assert from 'assert';
-import { mapInputToBranchName, validateBranchName } from '../../helpers/branch-name.helpers';
+import { mapInputToBranchName, validateBranchName, isDefaultBranch } from '../../helpers/branch-name.helpers';
 
 suite('Branch name helpers', () => {
+  suite('mapInputToBranchName()', () => {
+    test('returns false for feature branches', function () {
+      const input = 'feature/drgn-123-aaa-bbb';
+      assert.strictEqual(isDefaultBranch(input), false);
+    });
+
+    test('returns false for remote feature branches', function () {
+      const input = 'origin/feature/drgn-123-aaa-bbb';
+      assert.strictEqual(isDefaultBranch(input), false);
+    });
+
+    test('returns false for remote branches', function () {
+      const input = 'origin/drgn-123-aaa-bbb';
+      assert.strictEqual(isDefaultBranch(input), false);
+    });
+
+    test('returns true for master', function () {
+      const input = 'origin/master';
+      assert.strictEqual(isDefaultBranch(input), true);
+    });
+
+    test('returns true for main', function () {
+      const input = 'origin/main';
+      assert.strictEqual(isDefaultBranch(input), true);
+    });
+
+    test('returns true for master', function () {
+      const input = 'origin/develop';
+      assert.strictEqual(isDefaultBranch(input), true);
+    });
+  });
+
   suite('mapInputToBranchName()', () => {
     test('does not adjust valid branch names', function () {
       const input = 'feature/drgn-123-aaa-bbb';
