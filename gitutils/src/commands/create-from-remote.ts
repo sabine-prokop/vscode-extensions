@@ -1,6 +1,6 @@
 import { SimpleGit } from 'simple-git';
 import { window } from 'vscode';
-import { getCleanedBranchName } from '../helpers/branch-name.helpers';
+import { getCleanedBranchName, isDefaultBranch } from '../helpers/branch-name.helpers';
 import { catchTask, createLocalBranch, isBranchSummary } from '../helpers/simple-git.helpers';
 import { getBranchNameInputValue, showVscodeErrorMessage } from '../helpers/vscode.helpers';
 
@@ -9,7 +9,7 @@ type BranchOption = { label: string; value: string };
 export async function executeCreateFromRemoteCommand(simpleGit: SimpleGit) {
   const remoteBranchName = await getRemoteBranchName(simpleGit);
   if (remoteBranchName !== null) {
-    const branchName = await getBranchNameInputValue(getCleanedBranchName(remoteBranchName));
+    const branchName = isDefaultBranch(remoteBranchName) ? null : await getBranchNameInputValue(getCleanedBranchName(remoteBranchName));
     if (branchName !== null) {
       createLocalBranch(remoteBranchName, branchName, simpleGit);
     }
